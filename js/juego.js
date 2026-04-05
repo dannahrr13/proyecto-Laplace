@@ -128,3 +128,65 @@ document.getElementById("btn-medio").onclick = () => iniciarJuego("medio");
 document.getElementById("btn-dificil").onclick = () => iniciarJuego("dificil");
 
 document.getElementById("btn-reiniciar").onclick = () => location.reload();
+
+
+const viejaNueva = nuevaPregunta;
+
+nuevaPregunta = function() {
+    ecuacion.style.opacity = "0";
+    ecuacion.style.transform = "scale(0.8)";
+
+    setTimeout(() => {
+        viejaNueva();
+        ecuacion.style.opacity = "1";
+        ecuacion.style.transform = "scale(1)";
+    }, 200);
+};
+
+let bloqueado = false;
+
+const viejaFuncionBotones = nuevaPregunta;
+
+nuevaPregunta = function() {
+    viejaFuncionBotones();
+
+    const botones = opcionesDiv.querySelectorAll("button");
+
+    botones.forEach(btn => {
+        btn.addEventListener("click", () => {
+            if (bloqueado) return;
+            bloqueado = true;
+
+            setTimeout(() => {
+                bloqueado = false;
+            }, 800);
+        });
+    });
+};
+
+const viejoFinal = terminarJuego;
+
+terminarJuego = function() {
+    viejoFinal();
+
+    document.querySelector("#pantalla-final .card").style.animation = "pop 0.5s";
+};
+
+
+const viejoTiempo = iniciarTiempo;
+
+iniciarTiempo = function() {
+    viejoTiempo();
+
+    let ultimo = tiempo;
+
+    setInterval(() => {
+        if (tiempo !== ultimo) {
+            tiempoSpan.style.transform = "scale(1.3)";
+            setTimeout(() => {
+                tiempoSpan.style.transform = "scale(1)";
+            }, 150);
+            ultimo = tiempo;
+        }
+    }, 100);
+};
