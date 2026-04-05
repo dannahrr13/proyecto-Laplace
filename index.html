@@ -7,14 +7,36 @@
 </head>
 <body>
 
+    <!-- INICIO -->
     <div id="pantalla-inicio" class="pantalla">
         <h1>Laplace Game</h1>
-        <button id="btn-facil">Nivel Fácil</button>
-        <button id="btn-medio">Nivel Medio</button>
-        <button id="btn-dificil">Nivel Difícil</button>
+        <button id="btn-jugar">Jugar</button>
+        <button id="btn-instrucciones">Instrucciones</button>
     </div>
 
-    <div id="pantalla-juego" class="pantalla" style="display:none;">
+    <!-- INSTRUCCIONES -->
+    <div id="pantalla-instrucciones" class="pantalla oculto">
+        <h2>Instrucciones</h2>
+        <p>
+        Elige la respuesta correcta.<br>
+        Cada acierto suma puntos.<br>
+        Si fallas, pierdes una vida.<br>
+        Tienes tiempo limitado.<br><br>
+        Selecciona un nivel y juega.
+        </p>
+        <button id="btn-volver">Volver</button>
+    </div>
+
+    <!-- NIVELES -->
+    <div id="pantalla-niveles" class="pantalla oculto">
+        <h2>Selecciona nivel</h2>
+        <button id="btn-facil">Fácil</button>
+        <button id="btn-medio">Medio</button>
+        <button id="btn-dificil">Difícil</button>
+    </div>
+
+    <!-- JUEGO -->
+    <div id="pantalla-juego" class="pantalla oculto">
         <h2 id="ecuacion"></h2>
         <div id="opciones"></div>
 
@@ -23,7 +45,8 @@
         <p>Vidas: <span id="vidas">3</span></p>
     </div>
 
-    <div id="pantalla-final" class="pantalla" style="display:none;">
+    <!-- FINAL -->
+    <div id="pantalla-final" class="pantalla oculto">
         <h2>Juego terminado</h2>
         <p>Puntuación final: <span id="puntuacion-final"></span></p>
         <button id="btn-reiniciar">Jugar otra vez</button>

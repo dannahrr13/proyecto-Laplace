@@ -1,6 +1,10 @@
-const inicio = document.getElementById("pantalla-inicio");
-const juego = document.getElementById("pantalla-juego");
-const final = document.getElementById("pantalla-final");
+const pantallas = {
+    inicio: document.getElementById("pantalla-inicio"),
+    instrucciones: document.getElementById("pantalla-instrucciones"),
+    niveles: document.getElementById("pantalla-niveles"),
+    juego: document.getElementById("pantalla-juego"),
+    final: document.getElementById("pantalla-final")
+};
 
 const ecuacion = document.getElementById("ecuacion");
 const opcionesDiv = document.getElementById("opciones");
@@ -32,6 +36,11 @@ const dificil = [
 ];
 
 let actual;
+
+function mostrarPantalla(p) {
+    Object.values(pantallas).forEach(x => x.classList.add("oculto"));
+    p.classList.remove("oculto");
+}
 
 function nuevaPregunta() {
     actual = preguntas[Math.floor(Math.random() * preguntas.length)];
@@ -86,30 +95,33 @@ function iniciarTiempo() {
         tiempo--;
         tiempoSpan.textContent = tiempo;
 
-        if (tiempo <= 0) {
-            terminarJuego();
-        }
+        if (tiempo <= 0) terminarJuego();
     }, 1000);
 }
 
 function terminarJuego() {
     clearInterval(intervalo);
-    juego.style.display = "none";
-    final.style.display = "block";
     puntuacionFinal.textContent = puntos;
+    mostrarPantalla(pantallas.final);
 }
 
 function iniciarJuego(nivel) {
-    inicio.style.display = "none";
-    juego.style.display = "block";
+    puntos = 0;
+    vidas = 3;
+    tiempo = 60;
 
     if (nivel === "facil") preguntas = facil;
     if (nivel === "medio") preguntas = medio;
     if (nivel === "dificil") preguntas = dificil;
 
+    mostrarPantalla(pantallas.juego);
     nuevaPregunta();
     iniciarTiempo();
 }
+
+document.getElementById("btn-jugar").onclick = () => mostrarPantalla(pantallas.niveles);
+document.getElementById("btn-instrucciones").onclick = () => mostrarPantalla(pantallas.instrucciones);
+document.getElementById("btn-volver").onclick = () => mostrarPantalla(pantallas.inicio);
 
 document.getElementById("btn-facil").onclick = () => iniciarJuego("facil");
 document.getElementById("btn-medio").onclick = () => iniciarJuego("medio");
