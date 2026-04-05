@@ -1,96 +1,106 @@
-<!Doctype html>
+<!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Laplace Game</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="css/estilos.css" />
-    <link rel="stylesheet" href="css/animaciones.css" />
-  </head>
-  <body>
-    <!-- INICIO -->
-    <div id="pantalla-inicio" class="pantalla inicio">
-      <div class="contenedor-juego">
-        <!-- Botón cerrar -->
+<head>
+<meta charset="UTF-8">
+<title>Laplace Game</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/estilos.css">
+<link rel="stylesheet" href="css/animaciones.css">
+
+</head>
+
+<body>
+
+<!-- INICIO -->
+<div id="pantalla-inicio" class="pantalla inicio">
+
+    <div class="contenedor-juego">
+
         <div class="cerrar">✖</div>
 
-        <!-- Título -->
-        <div class="encabezado">
-          <p class="mini">QUIZ GAME</p>
+        <p class="mini">LAPLACE GAME</p>
 
-          <h1 class="titulo">
-            <span class="rosa">QUIZ</span>
-            <span class="azul">TIME</span>
-          </h1>
+        <h1 class="titulo">
+            <span class="rosa">LAPLACE</span>
+            <span class="azul">GAME</span>
+        </h1>
 
-          <p class="descripcion">
-            Juega con tus amigos y demuestra quién sabe más
-          </p>
-        </div>
+        <p class="descripcion">
+            Demuestra tus habilidades resolviendo ecuaciones ⚡
+        </p>
 
-        <!-- Botón -->
         <button id="btn-jugar" class="btn-start">START!</button>
+        <button id="btn-instrucciones" class="btn-start">INSTRUCCIONES</button>
 
-        <!-- Controles -->
         <div class="controles">
-          <div class="cruz">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
+            <div class="cruz">
+                <div class="vertical"></div>
+                <div class="horizontal"></div>
+            </div>
 
-          <div class="botones">
-            <span class="btn rojo"></span>
-            <span class="btn verde"></span>
-            <span class="btn azul"></span>
-            <span class="btn amarillo"></span>
-          </div>
+            <div class="botones">
+                <span class="btn rojo"></span>
+                <span class="btn verde"></span>
+                <span class="btn azul"></span>
+                <span class="btn amarillo"></span>
+            </div>
         </div>
-      </div>
+
     </div>
 
-    <!-- INSTRUCCIONES -->
-    <div id="pantalla-instrucciones" class="pantalla oculto">
-      <h2>Instrucciones</h2>
-      <p>
-        Elige la respuesta correcta.<br />
-        Cada acierto suma puntos.<br />
-        Si fallas, pierdes una vida.<br />
-        Tienes tiempo limitado.<br /><br />
-        Selecciona un nivel y juega.
-      </p>
-      <button id="btn-volver">Volver</button>
+</div>
+
+<!-- INSTRUCCIONES -->
+<div id="pantalla-instrucciones" class="pantalla oculto">
+    <div class="card">
+        <h2>Instrucciones</h2>
+        <p>
+        Elige la respuesta correcta.<br>
+        Cada acierto suma puntos.<br>
+        Si fallas, pierdes una vida.<br>
+        Tienes tiempo limitado.
+        </p>
+        <button id="btn-volver">VOLVER</button>
     </div>
+</div>
 
-    <!-- NIVELES -->
-    <div id="pantalla-niveles" class="pantalla oculto">
-      <h2>Selecciona nivel</h2>
-      <button id="btn-facil">Fácil</button>
-      <button id="btn-medio">Medio</button>
-      <button id="btn-dificil">Difícil</button>
+<!-- NIVELES -->
+<div id="pantalla-niveles" class="pantalla oculto">
+    <div class="card">
+        <h2>Selecciona nivel</h2>
+        <button id="btn-facil">FÁCIL</button>
+        <button id="btn-medio">MEDIO</button>
+        <button id="btn-dificil">DIFÍCIL</button>
     </div>
+</div>
 
-    <!-- JUEGO -->
-    <div id="pantalla-juego" class="pantalla oculto">
-      <h2 id="ecuacion"></h2>
-      <div id="opciones"></div>
+<!-- JUEGO -->
+<div id="pantalla-juego" class="pantalla oculto">
+    <div class="card">
+        <h2 id="ecuacion">x + 2 = 5</h2>
+        <div id="opciones">
+            <button>2</button>
+            <button>3</button>
+            <button>4</button>
+        </div>
 
-      <p>Puntos: <span id="puntos">0</span></p>
-      <p>Tiempo: <span id="tiempo">60</span></p>
-      <p>Vidas: <span id="vidas">3</span></p>
+        <p>Puntos: <span id="puntos">0</span></p>
+        <p>Tiempo: <span id="tiempo">60</span></p>
+        <p>Vidas: <span id="vidas">3</span></p>
     </div>
+</div>
 
-    <!-- FINAL -->
-    <div id="pantalla-final" class="pantalla oculto">
-      <h2>Juego terminado</h2>
-      <p>Puntuación final: <span id="puntuacion-final"></span></p>
-      <button id="btn-reiniciar">Jugar otra vez</button>
+<!-- FINAL -->
+<div id="pantalla-final" class="pantalla oculto">
+    <div class="card">
+        <h2>Juego terminado</h2>
+        <p>Puntuación final: <span id="puntuacion-final"></span></p>
+        <button id="btn-reiniciar">REINICIAR</button>
     </div>
+</div>
 
-    <script src="js/juego.js"></script>
-  </body>
+<script src="js/juego.js"></script>
+
+</body>
 </html>
