@@ -4,7 +4,7 @@ const juego = document.getElementById("pantalla-juego");
 const final = document.getElementById("pantalla-final");
 
 const ecuacion = document.getElementById("ecuacion");
-const respuestaInput = document.getElementById("respuesta");
+const opcionesDiv = document.getElementById("opciones");
 
 const puntosSpan = document.getElementById("puntos");
 const tiempoSpan = document.getElementById("tiempo");
@@ -17,14 +17,31 @@ let tiempo = 60;
 let intervalo;
 
 const preguntas = [
-    { pregunta: "L{ t }", respuesta: "1/s^2" },
-    { pregunta: "L{ 1 }", respuesta: "1/s" },
-    { pregunta: "L{ t^2 }", respuesta: "2/s^3" },
-    { pregunta: "L{ t^3 }", respuesta: "6/s^4" },
-    { pregunta: "L{ e^t }", respuesta: "1/(s-1)" },
-    { pregunta: "L{ e^(2t) }", respuesta: "1/(s-2)" },
-    { pregunta: "L{ sin(t) }", respuesta: "1/(s^2+1)" },
-    { pregunta: "L{ cos(t) }", respuesta: "s/(s^2+1)" }
+    {
+        pregunta: "L{ t }",
+        correcta: "1/s^2",
+        opciones: ["1/s", "1/s^2", "2/s^3"]
+    },
+    {
+        pregunta: "L{ 1 }",
+        correcta: "1/s",
+        opciones: ["1/s", "1/s^2", "s"]
+    },
+    {
+        pregunta: "L{ t^2 }",
+        correcta: "2/s^3",
+        opciones: ["1/s^2", "2/s^3", "6/s^4"]
+    },
+    {
+        pregunta: "L{ e^t }",
+        correcta: "1/(s-1)",
+        opciones: ["1/(s+1)", "1/(s-1)", "s/(s^2+1)"]
+    },
+    {
+        pregunta: "L{ sin(t) }",
+        correcta: "1/(s^2+1)",
+        opciones: ["1/(s^2+1)", "s/(s^2+1)", "1/s"]
+    }
 ];
 
 let actual;
@@ -32,27 +49,33 @@ let actual;
 function nuevaPregunta() {
     actual = preguntas[Math.floor(Math.random() * preguntas.length)];
     ecuacion.textContent = actual.pregunta;
-    respuestaInput.value = "";
+
+    opcionesDiv.innerHTML = "";
+
+    actual.opciones.forEach(op => {
+        const btn = document.createElement("button");
+        btn.textContent = op;
+
+        btn.onclick = function() {
+            if (op === actual.correcta) {
+                puntos++;
+            } else {
+                vidas--;
+            }
+
+            puntosSpan.textContent = puntos;
+            vidasSpan.textContent = vidas;
+
+            if (vidas <= 0) {
+                terminarJuego();
+            } else {
+                nuevaPregunta();
+            }
+        };
+
+        opcionesDiv.appendChild(btn);
+    });
 }
-
-document.getElementById("btn-responder").onclick = function() {
-    const respuesta = respuestaInput.value.trim().toLowerCase();
-
-    if (respuesta === actual.respuesta) {
-        puntos++;
-    } else {
-        vidas--;
-    }
-
-    puntosSpan.textContent = puntos;
-    vidasSpan.textContent = vidas;
-
-    if (vidas <= 0) {
-        terminarJuego();
-    } else {
-        nuevaPregunta();
-    }
-};
 
 function iniciarTiempo() {
     intervalo = setInterval(function() {

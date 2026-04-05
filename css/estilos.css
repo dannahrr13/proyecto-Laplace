@@ -1,7 +1,7 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #0b132b;
+    background-color: #14052c;
     color: white;
     text-align: center;
 }
@@ -10,8 +10,8 @@ body {
     max-width: 400px;
     margin: 80px auto;
     padding: 25px;
-    background-color: #1c2541;
-    border-radius: 10px;
+    background-color: #2a0a4a;
+    border-radius: 12px;
 }
 
 h1, h2 {
@@ -25,22 +25,21 @@ button {
     font-size: 15px;
     border: none;
     border-radius: 8px;
-    background-color: #3a86ff;
+    background-color: #7b2cbf;
     color: white;
     cursor: pointer;
 }
 
 button:hover {
-    background-color: #265ecf;
+    background-color: #5a189a;
 }
 
-input {
-    width: 100%;
-    padding: 10px;
-    margin: 12px 0;
-    border-radius: 6px;
-    border: none;
-    font-size: 15px;
+#opciones button {
+    background-color: #9d4edd;
+}
+
+#opciones button:hover {
+    background-color: #7b2cbf;
 }
 
 p {

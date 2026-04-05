@@ -16,8 +16,8 @@
     <div id="pantalla-instrucciones" class="pantalla" style="display:none;">
         <h2>Instrucciones</h2>
         <p>
-        Resuelve correctamente las transformadas de Laplace.<br>
-        Cada respuesta correcta suma 1 punto.<br>
+        Elige la respuesta correcta.<br>
+        Cada acierto suma 1 punto.<br>
         Si fallas, pierdes una vida.<br>
         Tienes 60 segundos y 3 vidas.
         </p>
@@ -27,9 +27,7 @@
     <div id="pantalla-juego" class="pantalla" style="display:none;">
         <h2 id="ecuacion"></h2>
 
-        <input type="text" id="respuesta" placeholder="Ej: 1/s^2">
-
-        <button id="btn-responder">Responder</button>
+        <div id="opciones"></div>
 
         <p>Puntos: <span id="puntos">0</span></p>
         <p>Tiempo: <span id="tiempo">60</span></p>
