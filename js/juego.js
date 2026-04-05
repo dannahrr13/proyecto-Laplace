@@ -1,5 +1,4 @@
 const inicio = document.getElementById("pantalla-inicio");
-const instrucciones = document.getElementById("pantalla-instrucciones");
 const juego = document.getElementById("pantalla-juego");
 const final = document.getElementById("pantalla-final");
 
@@ -15,41 +14,33 @@ let puntos = 0;
 let vidas = 3;
 let tiempo = 60;
 let intervalo;
+let preguntas = [];
 
-const preguntas = [
-    {
-        pregunta: "L{ t }",
-        correcta: "1/s^2",
-        opciones: ["1/s", "1/s^2", "2/s^3"]
-    },
-    {
-        pregunta: "L{ 1 }",
-        correcta: "1/s",
-        opciones: ["1/s", "1/s^2", "s"]
-    },
-    {
-        pregunta: "L{ t^2 }",
-        correcta: "2/s^3",
-        opciones: ["1/s^2", "2/s^3", "6/s^4"]
-    },
-    {
-        pregunta: "L{ e^t }",
-        correcta: "1/(s-1)",
-        opciones: ["1/(s+1)", "1/(s-1)", "s/(s^2+1)"]
-    },
-    {
-        pregunta: "L{ sin(t) }",
-        correcta: "1/(s^2+1)",
-        opciones: ["1/(s^2+1)", "s/(s^2+1)", "1/s"]
-    }
+const facil = [
+    { pregunta: "L{ t }", correcta: "1/s^2", opciones: ["1/s", "1/s^2", "2/s^3"] },
+    { pregunta: "L{ 1 }", correcta: "1/s", opciones: ["1/s", "s", "1/s^2"] }
+];
+
+const medio = [
+    { pregunta: "L{ t^2 }", correcta: "2/s^3", opciones: ["2/s^3", "6/s^4", "1/s^2"] },
+    { pregunta: "L{ sin(t) }", correcta: "1/(s^2+1)", opciones: ["1/(s^2+1)", "s/(s^2+1)", "1/s"] }
+];
+
+const dificil = [
+    { pregunta: "L{ e^t }", correcta: "1/(s-1)", opciones: ["1/(s-1)", "1/(s+1)", "s/(s^2+1)"] },
+    { pregunta: "L{ cos(t) }", correcta: "s/(s^2+1)", opciones: ["s/(s^2+1)", "1/(s^2+1)", "1/s"] }
 ];
 
 let actual;
 
 function nuevaPregunta() {
     actual = preguntas[Math.floor(Math.random() * preguntas.length)];
-    ecuacion.textContent = actual.pregunta;
 
+    ecuacion.classList.remove("cambio");
+    void ecuacion.offsetWidth;
+    ecuacion.classList.add("cambio");
+
+    ecuacion.textContent = actual.pregunta;
     opcionesDiv.innerHTML = "";
 
     actual.opciones.forEach(op => {
@@ -57,8 +48,6 @@ function nuevaPregunta() {
         btn.textContent = op;
 
         btn.onclick = function() {
-
-            // Desactivar todos
             const botones = opcionesDiv.querySelectorAll("button");
             botones.forEach(b => b.disabled = true);
 
@@ -69,7 +58,6 @@ function nuevaPregunta() {
                 btn.classList.add("incorrecto");
                 vidas--;
 
-                // marcar correcta
                 botones.forEach(b => {
                     if (b.textContent === actual.correcta) {
                         b.classList.add("correcto");
@@ -94,7 +82,7 @@ function nuevaPregunta() {
 }
 
 function iniciarTiempo() {
-    intervalo = setInterval(function() {
+    intervalo = setInterval(() => {
         tiempo--;
         tiempoSpan.textContent = tiempo;
 
@@ -111,23 +99,20 @@ function terminarJuego() {
     puntuacionFinal.textContent = puntos;
 }
 
-document.getElementById("btn-iniciar").onclick = function() {
+function iniciarJuego(nivel) {
     inicio.style.display = "none";
     juego.style.display = "block";
+
+    if (nivel === "facil") preguntas = facil;
+    if (nivel === "medio") preguntas = medio;
+    if (nivel === "dificil") preguntas = dificil;
+
     nuevaPregunta();
     iniciarTiempo();
-};
+}
 
-document.getElementById("btn-instrucciones").onclick = function() {
-    inicio.style.display = "none";
-    instrucciones.style.display = "block";
-};
+document.getElementById("btn-facil").onclick = () => iniciarJuego("facil");
+document.getElementById("btn-medio").onclick = () => iniciarJuego("medio");
+document.getElementById("btn-dificil").onclick = () => iniciarJuego("dificil");
 
-document.getElementById("btn-volver").onclick = function() {
-    instrucciones.style.display = "none";
-    inicio.style.display = "block";
-};
-
-document.getElementById("btn-reiniciar").onclick = function() {
-    location.reload();
-};
+document.getElementById("btn-reiniciar").onclick = () => location.reload();
