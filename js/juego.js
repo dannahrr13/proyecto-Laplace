@@ -22,17 +22,23 @@ let preguntas = [];
 
 const facil = [
     { pregunta: "L{ t }", correcta: "1/s^2", opciones: ["1/s", "1/s^2", "2/s^3"] },
-    { pregunta: "L{ 1 }", correcta: "1/s", opciones: ["1/s", "s", "1/s^2"] }
+    { pregunta: "L{ 1 }", correcta: "1/s", opciones: ["1/s", "s", "1/s^2"] },
+    { pregunta: "L{ t^2 }", correcta: "2/s^3", opciones: ["2/s^3", "1/s^2", "6/s^4"] },
+    { pregunta: "L{ 3 }", correcta: "3/s", opciones: ["3/s", "1/s", "3/s^2"] }
 ];
 
 const medio = [
     { pregunta: "L{ t^2 }", correcta: "2/s^3", opciones: ["2/s^3", "6/s^4", "1/s^2"] },
-    { pregunta: "L{ sin(t) }", correcta: "1/(s^2+1)", opciones: ["1/(s^2+1)", "s/(s^2+1)", "1/s"] }
+    { pregunta: "L{ sin(t) }", correcta: "1/(s^2+1)", opciones: ["1/(s^2+1)", "s/(s^2+1)", "1/s"] },
+    { pregunta: "L{ cos(t) }", correcta: "s/(s^2+1)", opciones: ["s/(s^2+1)", "1/(s^2+1)", "1/s"] },
+    { pregunta: "L{ 2sin(t) }", correcta: "2/(s^2+1)", opciones: ["2/(s^2+1)", "1/(s^2+1)", "2s/(s^2+1)"] }
 ];
 
 const dificil = [
     { pregunta: "L{ e^t }", correcta: "1/(s-1)", opciones: ["1/(s-1)", "1/(s+1)", "s/(s^2+1)"] },
-    { pregunta: "L{ cos(t) }", correcta: "s/(s^2+1)", opciones: ["s/(s^2+1)", "1/(s^2+1)", "1/s"] }
+    { pregunta: "L{ cos(t) }", correcta: "s/(s^2+1)", opciones: ["s/(s^2+1)", "1/(s^2+1)", "1/s"] },
+    { pregunta: "L{ e^{-t} }", correcta: "1/(s+1)", opciones: ["1/(s+1)", "1/(s-1)", "s/(s^2+1)"] },
+    { pregunta: "L{ e^{2t} }", correcta: "1/(s-2)", opciones: ["1/(s-2)", "1/(s+2)", "2/(s-2)"] }
 ];
 
 let actual;
@@ -56,7 +62,7 @@ function nuevaPregunta() {
         const btn = document.createElement("button");
         btn.textContent = op;
 
-        btn.onclick = function() {
+        btn.onclick = function () {
             const botones = opcionesDiv.querySelectorAll("button");
             botones.forEach(b => b.disabled = true);
 
@@ -132,7 +138,7 @@ document.getElementById("btn-reiniciar").onclick = () => location.reload();
 
 const viejaNueva = nuevaPregunta;
 
-nuevaPregunta = function() {
+nuevaPregunta = function () {
     ecuacion.style.opacity = "0";
     ecuacion.style.transform = "scale(0.8)";
 
@@ -147,7 +153,7 @@ let bloqueado = false;
 
 const viejaFuncionBotones = nuevaPregunta;
 
-nuevaPregunta = function() {
+nuevaPregunta = function () {
     viejaFuncionBotones();
 
     const botones = opcionesDiv.querySelectorAll("button");
@@ -166,7 +172,7 @@ nuevaPregunta = function() {
 
 const viejoFinal = terminarJuego;
 
-terminarJuego = function() {
+terminarJuego = function () {
     viejoFinal();
 
     document.querySelector("#pantalla-final .card").style.animation = "pop 0.5s";
@@ -175,7 +181,7 @@ terminarJuego = function() {
 
 const viejoTiempo = iniciarTiempo;
 
-iniciarTiempo = function() {
+iniciarTiempo = function () {
     viejoTiempo();
 
     let ultimo = tiempo;
