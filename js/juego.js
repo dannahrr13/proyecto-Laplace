@@ -57,20 +57,36 @@ function nuevaPregunta() {
         btn.textContent = op;
 
         btn.onclick = function() {
+
+            // Desactivar todos
+            const botones = opcionesDiv.querySelectorAll("button");
+            botones.forEach(b => b.disabled = true);
+
             if (op === actual.correcta) {
+                btn.classList.add("correcto");
                 puntos++;
             } else {
+                btn.classList.add("incorrecto");
                 vidas--;
+
+                // marcar correcta
+                botones.forEach(b => {
+                    if (b.textContent === actual.correcta) {
+                        b.classList.add("correcto");
+                    }
+                });
             }
 
             puntosSpan.textContent = puntos;
             vidasSpan.textContent = vidas;
 
-            if (vidas <= 0) {
-                terminarJuego();
-            } else {
-                nuevaPregunta();
-            }
+            setTimeout(() => {
+                if (vidas <= 0) {
+                    terminarJuego();
+                } else {
+                    nuevaPregunta();
+                }
+            }, 800);
         };
 
         opcionesDiv.appendChild(btn);

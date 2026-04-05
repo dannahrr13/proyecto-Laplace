@@ -1,47 +1,84 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #14052c;
+    background: linear-gradient(135deg, #14052c, #240046);
     color: white;
     text-align: center;
 }
 
+/* Tarjeta */
 .pantalla {
-    max-width: 400px;
+    max-width: 420px;
     margin: 80px auto;
     padding: 25px;
-    background-color: #2a0a4a;
-    border-radius: 12px;
+    background: #2a0a4a;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    animation: aparecer 0.5s ease;
+}
+
+/* Animación entrada */
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 h1, h2 {
     margin-bottom: 20px;
 }
 
+/* Botones generales */
 button {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     margin: 8px 0;
     font-size: 15px;
     border: none;
-    border-radius: 8px;
-    background-color: #7b2cbf;
+    border-radius: 10px;
+    background: #7b2cbf;
     color: white;
     cursor: pointer;
+    transition: all 0.2s ease;
 }
 
+/* Hover */
 button:hover {
-    background-color: #5a189a;
+    background: #5a189a;
+    transform: scale(1.03);
 }
 
+/* Click efecto */
+button:active {
+    transform: scale(0.95);
+}
+
+/* Opciones */
 #opciones button {
-    background-color: #9d4edd;
+    background: #9d4edd;
 }
 
-#opciones button:hover {
-    background-color: #7b2cbf;
+/* Correcto */
+.correcto {
+    background: #38b000 !important;
 }
 
+/* Incorrecto */
+.incorrecto {
+    background: #d00000 !important;
+}
+
+/* Texto info */
 p {
     margin: 6px 0;
+}
+
+/* Contador estilo */
+span {
+    font-weight: bold;
 }
