@@ -6,41 +6,42 @@
     <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
- 
-    <!-- Pantalla de inicio -->
+
     <div id="pantalla-inicio" class="pantalla">
-        <h1>Laplace Transform Game</h1>
+        <h1>Laplace Game</h1>
         <button id="btn-iniciar">Iniciar Juego</button>
         <button id="btn-instrucciones">Instrucciones</button>
     </div>
- 
-    <!-- Pantalla de instrucciones -->
+
     <div id="pantalla-instrucciones" class="pantalla" style="display:none;">
         <h2>Instrucciones</h2>
-        <p>Resuelve correctamente las transformadas de Laplace antes de que el tiempo termine.</p>
+        <p>
+        Resuelve correctamente las transformadas de Laplace.<br>
+        Cada respuesta correcta suma 1 punto.<br>
+        Si fallas, pierdes una vida.<br>
+        Tienes 60 segundos y 3 vidas.
+        </p>
         <button id="btn-volver">Volver</button>
     </div>
- 
-    <!-- Pantalla del juego -->
+
     <div id="pantalla-juego" class="pantalla" style="display:none;">
-        <h2 id="ecuacion">L{ t }</h2>
- 
-        <input type="text" id="respuesta" placeholder="Escribe tu respuesta">
- 
+        <h2 id="ecuacion"></h2>
+
+        <input type="text" id="respuesta" placeholder="Ej: 1/s^2">
+
         <button id="btn-responder">Responder</button>
- 
+
         <p>Puntos: <span id="puntos">0</span></p>
         <p>Tiempo: <span id="tiempo">60</span></p>
         <p>Vidas: <span id="vidas">3</span></p>
     </div>
- 
-    <!-- Pantalla final -->
+
     <div id="pantalla-final" class="pantalla" style="display:none;">
         <h2>Juego terminado</h2>
         <p>Puntuación final: <span id="puntuacion-final"></span></p>
         <button id="btn-reiniciar">Jugar otra vez</button>
     </div>
- 
+
     <script src="js/juego.js"></script>
 </body>
 </html>

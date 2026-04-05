@@ -11,33 +11,32 @@ const tiempoSpan = document.getElementById("tiempo");
 const vidasSpan = document.getElementById("vidas");
 const puntuacionFinal = document.getElementById("puntuacion-final");
 
-// Datos del juego
 let puntos = 0;
 let vidas = 3;
 let tiempo = 60;
 let intervalo;
 
-// Preguntas de Laplace
 const preguntas = [
     { pregunta: "L{ t }", respuesta: "1/s^2" },
     { pregunta: "L{ 1 }", respuesta: "1/s" },
     { pregunta: "L{ t^2 }", respuesta: "2/s^3" },
+    { pregunta: "L{ t^3 }", respuesta: "6/s^4" },
     { pregunta: "L{ e^t }", respuesta: "1/(s-1)" },
-    { pregunta: "L{ sin(t) }", respuesta: "1/(s^2+1)" }
+    { pregunta: "L{ e^(2t) }", respuesta: "1/(s-2)" },
+    { pregunta: "L{ sin(t) }", respuesta: "1/(s^2+1)" },
+    { pregunta: "L{ cos(t) }", respuesta: "s/(s^2+1)" }
 ];
 
 let actual;
 
-// Mostrar pregunta
 function nuevaPregunta() {
     actual = preguntas[Math.floor(Math.random() * preguntas.length)];
     ecuacion.textContent = actual.pregunta;
     respuestaInput.value = "";
 }
 
-// Validar respuesta
 document.getElementById("btn-responder").onclick = function() {
-    const respuesta = respuestaInput.value.trim();
+    const respuesta = respuestaInput.value.trim().toLowerCase();
 
     if (respuesta === actual.respuesta) {
         puntos++;
@@ -55,7 +54,6 @@ document.getElementById("btn-responder").onclick = function() {
     }
 };
 
-// Temporizador
 function iniciarTiempo() {
     intervalo = setInterval(function() {
         tiempo--;
@@ -67,7 +65,6 @@ function iniciarTiempo() {
     }, 1000);
 }
 
-// Terminar juego
 function terminarJuego() {
     clearInterval(intervalo);
     juego.style.display = "none";
@@ -75,7 +72,6 @@ function terminarJuego() {
     puntuacionFinal.textContent = puntos;
 }
 
-// Botones
 document.getElementById("btn-iniciar").onclick = function() {
     inicio.style.display = "none";
     juego.style.display = "block";
