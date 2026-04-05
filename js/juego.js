@@ -60,6 +60,11 @@ function mostrarPantalla(p) {
 function mezclar(array) {
     return array.sort(() => Math.random() - 0.5);
 }
+//record
+const recordSpan = document.getElementById("record");
+let record = parseInt(localStorage.getItem("record")) || 0;
+recordSpan.textContent = record;
+
 
 // NUEVA PREGUNTA
 function nuevaPregunta() {
@@ -157,6 +162,14 @@ function terminarJuego() {
 
     puntuacionFinal.textContent = puntos;
 
+    // ACTUALIZAR RECORD
+    if (puntos > record) {
+        record = puntos;
+        localStorage.setItem("record", record);
+    }
+
+    recordSpan.textContent = record;
+
     const card = document.querySelector("#pantalla-final .card");
     if (card) {
         card.style.animation = "pop 0.5s";
@@ -164,6 +177,7 @@ function terminarJuego() {
 
     mostrarPantalla(pantallas.final);
 }
+
 
 // INICIAR
 function iniciarJuego(nivel) {
