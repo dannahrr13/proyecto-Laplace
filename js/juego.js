@@ -1,3 +1,4 @@
+// PANTALLAS
 const pantallas = {
     inicio: document.getElementById("pantalla-inicio"),
     instrucciones: document.getElementById("pantalla-instrucciones"),
@@ -6,6 +7,7 @@ const pantallas = {
     final: document.getElementById("pantalla-final")
 };
 
+// ELEMENTOS
 const ecuacion = document.getElementById("ecuacion");
 const opcionesDiv = document.getElementById("opciones");
 
@@ -14,12 +16,19 @@ const tiempoSpan = document.getElementById("tiempo");
 const vidasSpan = document.getElementById("vidas");
 const puntuacionFinal = document.getElementById("puntuacion-final");
 
+// VARIABLES
 let puntos = 0;
 let vidas = 3;
 let tiempo = 60;
-let intervalo;
-let preguntas = [];
 
+let intervalo;
+let intervaloAnimacion;
+
+let preguntas = [];
+let actual;
+let bloqueado = false;
+
+// NIVELES
 const facil = [
     { pregunta: "L{ t }", correcta: "1/s^2", opciones: ["1/s", "1/s^2", "2/s^3"] },
     { pregunta: "L{ 1 }", correcta: "1/s", opciones: ["1/s", "s", "1/s^2"] },
@@ -41,80 +50,134 @@ const dificil = [
     { pregunta: "L{ e^{2t} }", correcta: "1/(s-2)", opciones: ["1/(s-2)", "1/(s+2)", "2/(s-2)"] }
 ];
 
-let actual;
-
+// CAMBIAR PANTALLA
 function mostrarPantalla(p) {
     Object.values(pantallas).forEach(x => x.classList.add("oculto"));
     p.classList.remove("oculto");
 }
 
-function nuevaPregunta() {
-    actual = preguntas[Math.floor(Math.random() * preguntas.length)];
-
-    ecuacion.classList.remove("cambio");
-    void ecuacion.offsetWidth;
-    ecuacion.classList.add("cambio");
-
-    ecuacion.textContent = actual.pregunta;
-    opcionesDiv.innerHTML = "";
-
-    actual.opciones.forEach(op => {
-        const btn = document.createElement("button");
-        btn.textContent = op;
-
-        btn.onclick = function () {
-            const botones = opcionesDiv.querySelectorAll("button");
-            botones.forEach(b => b.disabled = true);
-
-            if (op === actual.correcta) {
-                btn.classList.add("correcto");
-                puntos++;
-            } else {
-                btn.classList.add("incorrecto");
-                vidas--;
-
-                botones.forEach(b => {
-                    if (b.textContent === actual.correcta) {
-                        b.classList.add("correcto");
-                    }
-                });
-            }
-
-            puntosSpan.textContent = puntos;
-            vidasSpan.textContent = vidas;
-
-            setTimeout(() => {
-                if (vidas <= 0) {
-                    terminarJuego();
-                } else {
-                    nuevaPregunta();
-                }
-            }, 800);
-        };
-
-        opcionesDiv.appendChild(btn);
-    });
+// MEZCLAR OPCIONES
+function mezclar(array) {
+    return array.sort(() => Math.random() - 0.5);
 }
 
+// NUEVA PREGUNTA
+function nuevaPregunta() {
+
+    ecuacion.style.opacity = "0";
+    ecuacion.style.transform = "scale(0.8)";
+
+    setTimeout(() => {
+
+        actual = preguntas[Math.floor(Math.random() * preguntas.length)];
+
+        ecuacion.textContent = actual.pregunta;
+        opcionesDiv.innerHTML = "";
+
+        const opcionesMezcladas = mezclar([...actual.opciones]);
+
+        opcionesMezcladas.forEach(op => {
+            const btn = document.createElement("button");
+            btn.textContent = op;
+
+            btn.onclick = () => {
+
+                if (bloqueado) return;
+                bloqueado = true;
+
+                const botones = opcionesDiv.querySelectorAll("button");
+                botones.forEach(b => b.disabled = true);
+
+                if (op === actual.correcta) {
+                    btn.classList.add("correcto");
+                    puntos++;
+                } else {
+                    btn.classList.add("incorrecto");
+                    vidas--;
+
+                    botones.forEach(b => {
+                        if (b.textContent === actual.correcta) {
+                            b.classList.add("correcto");
+                        }
+                    });
+                }
+
+                puntosSpan.textContent = puntos;
+                vidasSpan.textContent = vidas;
+
+                setTimeout(() => {
+                    bloqueado = false;
+
+                    if (vidas <= 0) terminarJuego();
+                    else nuevaPregunta();
+
+                }, 800);
+            };
+
+            opcionesDiv.appendChild(btn);
+        });
+
+        ecuacion.style.opacity = "1";
+        ecuacion.style.transform = "scale(1)";
+
+    }, 200);
+}
+
+// TIEMPO
 function iniciarTiempo() {
+
+    clearInterval(intervalo);
+    clearInterval(intervaloAnimacion);
+
     intervalo = setInterval(() => {
         tiempo--;
         tiempoSpan.textContent = tiempo;
 
         if (tiempo <= 0) terminarJuego();
     }, 1000);
+
+    // animación del contador
+    let ultimo = tiempo;
+
+    intervaloAnimacion = setInterval(() => {
+        if (tiempo !== ultimo) {
+            tiempoSpan.style.transform = "scale(1.3)";
+            setTimeout(() => {
+                tiempoSpan.style.transform = "scale(1)";
+            }, 150);
+            ultimo = tiempo;
+        }
+    }, 100);
 }
 
+// TERMINAR
 function terminarJuego() {
     clearInterval(intervalo);
+    clearInterval(intervaloAnimacion);
+
     puntuacionFinal.textContent = puntos;
+
+    const card = document.querySelector("#pantalla-final .card");
+    if (card) {
+        card.style.animation = "pop 0.5s";
+    }
+
     mostrarPantalla(pantallas.final);
 }
 
+// INICIAR
 function iniciarJuego(nivel) {
+
+    clearInterval(intervalo);
+    clearInterval(intervaloAnimacion);
+
     puntos = 0;
     vidas = 3;
     tiempo = 60;
+
+    puntosSpan.textContent = puntos;
+    vidasSpan.textContent = vidas;
+    tiempoSpan.textContent = tiempo;
 
     if (nivel === "facil") preguntas = facil;
     if (nivel === "medio") preguntas = medio;
@@ -125,6 +188,7 @@ function iniciarJuego(nivel) {
     iniciarTiempo();
 }
 
+// EVENTOS
 document.getElementById("btn-jugar").onclick = () => mostrarPantalla(pantallas.niveles);
 document.getElementById("btn-instrucciones").onclick = () => mostrarPantalla(pantallas.instrucciones);
 document.getElementById("btn-volver").onclick = () => mostrarPantalla(pantallas.inicio);
@@ -134,65 +198,3 @@ document.getElementById("btn-medio").onclick = () => iniciarJuego("medio");
 document.getElementById("btn-dificil").onclick = () => iniciarJuego("dificil");
 
 document.getElementById("btn-reiniciar").onclick = () => location.reload();
-
-
-const viejaNueva = nuevaPregunta;
-
-nuevaPregunta = function () {
-    ecuacion.style.opacity = "0";
-    ecuacion.style.transform = "scale(0.8)";
-
-    setTimeout(() => {
-        viejaNueva();
-        ecuacion.style.opacity = "1";
-        ecuacion.style.transform = "scale(1)";
-    }, 200);
-};
-
-let bloqueado = false;
-
-const viejaFuncionBotones = nuevaPregunta;
-
-nuevaPregunta = function () {
-    viejaFuncionBotones();
-
-    const botones = opcionesDiv.querySelectorAll("button");
-
-    botones.forEach(btn => {
-        btn.addEventListener("click", () => {
-            if (bloqueado) return;
-            bloqueado = true;
-
-            setTimeout(() => {
-                bloqueado = false;
-            }, 800);
-        });
-    });
-};
-
-const viejoFinal = terminarJuego;
-
-terminarJuego = function () {
-    viejoFinal();
-
-    document.querySelector("#pantalla-final .card").style.animation = "pop 0.5s";
-};
-
-
-const viejoTiempo = iniciarTiempo;
-
-iniciarTiempo = function () {
-    viejoTiempo();
-
-    let ultimo = tiempo;
-
-    setInterval(() => {
-        if (tiempo !== ultimo) {
-            tiempoSpan.style.transform = "scale(1.3)";
-            setTimeout(() => {
-                tiempoSpan.style.transform = "scale(1)";
-            }, 150);
-            ultimo = tiempo;
-        }
-    }, 100);
-};
