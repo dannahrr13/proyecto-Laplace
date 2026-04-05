@@ -78,7 +78,14 @@
 <!-- JUEGO -->
 <div id="pantalla-juego" class="pantalla oculto">
     <div class="card">
+
         <h2 id="ecuacion">x + 2 = 5</h2>
+
+        <!-- BARRA DE TIEMPO -->
+        <div class="barra">
+            <div id="barra-tiempo"></div>
+        </div>
+
         <div id="opciones">
             <button>2</button>
             <button>3</button>
@@ -88,6 +95,7 @@
         <p>Puntos: <span id="puntos">0</span></p>
         <p>Tiempo: <span id="tiempo">60</span></p>
         <p>Vidas: <span id="vidas">3</span></p>
+
     </div>
 </div>
 
@@ -99,6 +107,19 @@
         <button id="btn-reiniciar">REINICIAR</button>
     </div>
 </div>
+
+<!-- AUDIO -->
+<audio id="musica" loop>
+    <source src="audio/musica.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="correcto-sound">
+    <source src="audio/correcto.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="error-sound">
+    <source src="audio/error.mp3" type="audio/mpeg">
+</audio>
 
 <script src="js/juego.js"></script>
 

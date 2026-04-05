@@ -128,3 +128,86 @@ document.getElementById("btn-medio").onclick = () => iniciarJuego("medio");
 document.getElementById("btn-dificil").onclick = () => iniciarJuego("dificil");
 
 document.getElementById("btn-reiniciar").onclick = () => location.reload();
+
+// ===== MUSICA =====
+const musica = document.getElementById("musica");
+const sonidoCorrecto = document.getElementById("correcto-sound");
+const sonidoError = document.getElementById("error-sound");
+
+// reproducir musica al iniciar
+document.getElementById("btn-jugar").addEventListener("click", () => {
+    musica.play();
+});
+
+// ===== SONIDOS EN RESPUESTAS =====
+const viejaNuevaPregunta = nuevaPregunta;
+
+nuevaPregunta = function() {
+    viejaNuevaPregunta();
+
+    const botones = opcionesDiv.querySelectorAll("button");
+
+    botones.forEach(btn => {
+        btn.addEventListener("click", () => {
+            if (btn.textContent === actual.correcta) {
+                sonidoCorrecto.play();
+            } else {
+                sonidoError.play();
+            }
+        });
+    });
+};
+
+// ===== BARRA DE TIEMPO =====
+const barra = document.getElementById("barra-tiempo");
+
+const viejoTiempo = iniciarTiempo;
+
+iniciarTiempo = function() {
+    viejoTiempo();
+
+    const tiempoTotal = 60;
+
+    setInterval(() => {
+        let porcentaje = (tiempo / tiempoTotal) * 100;
+        barra.style.width = porcentaje + "%";
+    }, 200);
+};
+
+// ===== GUARDAR RECORD =====
+function guardarRecord() {
+    let record = localStorage.getItem("record") || 0;
+
+    if (puntos > record) {
+        localStorage.setItem("record", puntos);
+    }
+}
+
+// mostrar record en final
+const viejoFinal = terminarJuego;
+
+terminarJuego = function() {
+    guardarRecord();
+    viejoFinal();
+
+    let record = localStorage.getItem("record") || 0;
+
+    const texto = document.createElement("p");
+    texto.textContent = "Record: " + record;
+
+    document.querySelector("#pantalla-final .card").appendChild(texto);
+};
+
+// ===== EFECTO CAMBIO PRO =====
+const viejaFuncion = nuevaPregunta;
+
+nuevaPregunta = function() {
+    ecuacion.style.transform = "scale(0.8)";
+    ecuacion.style.opacity = "0";
+
+    setTimeout(() => {
+        viejaFuncion();
+        ecuacion.style.transform = "scale(1)";
+        ecuacion.style.opacity = "1";
+    }, 200);
+};
