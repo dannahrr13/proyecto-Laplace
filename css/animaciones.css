@@ -1,4 +1,4 @@
-/* FONDO ANIMADO */
+/* FONDO */
 .inicio {
     background: linear-gradient(270deg, #6a00ff, #a100ff, #00c3ff);
     background-size: 600% 600%;
@@ -21,7 +21,7 @@
     50% {transform: translateY(-10px);}
 }
 
-/* TITULO VIBRACIÓN */
+/* TITULO */
 .titulo {
     animation: glitch 1.5s infinite;
 }
@@ -32,13 +32,4 @@
     50% {transform: translate(-2px, 2px);}
     75% {transform: translate(2px, 2px);}
     100% {transform: translate(0);}
-}
-
-/* BOTÓN */
-.btn-start:hover {
-    transform: scale(1.1);
-}
-
-.btn-start:active {
-    transform: translateY(5px);
 }
