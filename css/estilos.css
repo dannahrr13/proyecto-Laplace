@@ -1,138 +1,116 @@
+.inicio {
+    background: linear-gradient(270deg, #6a00ff, #a100ff, #00c3ff);
+    background-size: 600% 600%;
+    animation: fondo 10s ease infinite;
+}
+
+@keyframes fondo {
+    0% {background-position: 0%}
+    50% {background-position: 100%}
+    100% {background-position: 0%}
+}
+
+#pantalla-instrucciones {
+    background: linear-gradient(135deg, #3a0ca3, #7209b7, #b5179e);
+    background-size: 400% 400%;
+    animation: fondoPantalla 12s ease infinite;
+}
+
+#pantalla-niveles {
+    background: linear-gradient(135deg, #240046, #5a189a, #9d4edd);
+    background-size: 400% 400%;
+    animation: fondoPantalla 12s ease infinite;
+}
+
+@keyframes fondoPantalla {
+    0% {background-position: 0%}
+    50% {background-position: 100%}
+    100% {background-position: 0%}
+}
+
 body {
     margin: 0;
     font-family: 'Press Start 2P', cursive;
 }
 
-/* PANTALLAS */
 .pantalla {
     display: none;
     height: 100vh;
     justify-content: center;
     align-items: center;
+    transition: opacity 0.4s ease;
 }
 
 .pantalla:not(.oculto) {
     display: flex;
 }
 
-/* FONDO */
-.inicio {
-    background: linear-gradient(135deg, #6a00ff, #9d00ff);
-}
-
-/* CONTENEDOR */
 .contenedor-juego {
     width: 750px;
     background: #e6e6e6;
     border: 6px solid black;
     border-radius: 20px;
-    box-shadow: 0 0 0 6px #00e0ff;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
     padding: 30px;
     text-align: center;
-    position: relative;
+    animation: flotar 3s infinite;
 }
 
-/* TARJETAS */
+@keyframes flotar {
+    50% { transform: translateY(-10px); }
+}
+
 .card {
     background: #e6e6e6;
     padding: 30px;
     border: 5px solid black;
     border-radius: 20px;
     text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    animation: aparecer 0.4s ease;
 }
 
-/* TITULO */
+@keyframes aparecer {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
 .titulo {
     font-size: 40px;
+    animation: glitch 1.5s infinite;
 }
 
-.rosa { color: #ff00ff; }
-.azul { color: #00bfff; }
-
-.mini {
-    font-size: 10px;
+@keyframes glitch {
+    25% { transform: translate(2px, -2px); }
+    50% { transform: translate(-2px, 2px); }
+    75% { transform: translate(2px, 2px); }
 }
 
-.descripcion {
-    font-size: 10px;
-}
-
-/* BOTONES */
 button {
     margin: 10px;
     padding: 15px;
     border: 4px solid black;
     border-radius: 20px;
     cursor: pointer;
-}
-
-/* START */
-.btn-start {
-    box-shadow: 0 5px black;
-}
-
-/* CRUZ */
-.cruz {
-    position: relative;
-    width: 40px;
-    height: 40px;
-}
-
-.vertical {
-    position: absolute;
-    width: 12px;
-    height: 40px;
-    background: black;
-    left: 14px;
-}
-
-.horizontal {
-    position: absolute;
-    width: 40px;
-    height: 12px;
-    background: black;
-    top: 14px;
-}
-
-.botones .btn {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    display: inline-block;
-}
-
-.rojo { background: red; }
-.verde { background: green; }
-.azul { background: blue; }
-.amarillo { background: yellow; }
-
-/* ===== SOMBRA PRO ===== */
-.contenedor-juego, .card {
-    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-}
-
-
-button {
-    transition: all 0.2s ease;
+    transition: 0.2s;
 }
 
 button:hover {
     transform: scale(1.08);
-    background: #d0d0ff;
+    box-shadow: 0 0 10px #9d4edd, 0 0 20px #c77dff;
 }
 
 button:active {
     transform: scale(0.95);
 }
 
-
 .correcto {
-    background: #00ff88 !important;
+    background: #00ff88;
     animation: pop 0.3s;
 }
 
 .incorrecto {
-    background: #ff4d4d !important;
+    background: red;
     animation: shake 0.3s;
 }
 
@@ -141,37 +119,25 @@ button:active {
 }
 
 @keyframes shake {
-    25% { transform: translateX(-6px); }
-    75% { transform: translateX(6px); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
 }
 
-
-body::after {
-    content: "";
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px);
-    background-size: 60px 60px;
-    animation: fondoMove 20s linear infinite;
-    z-index: -1;
+.punto-flotante {
+    position: absolute;
+    color: #00ffcc;
+    animation: subir 1s forwards;
 }
 
-@keyframes fondoMove {
-    from { transform: translateY(0); }
-    to { transform: translateY(-60px); }
+@keyframes subir {
+    to { transform: translateY(-30px); opacity: 0; }
 }
 
-
-#ecuacion {
-    transition: all 0.3s ease;
+.peligro {
+    color: red;
+    animation: latido 0.6s infinite;
 }
 
-.cambio {
-    transform: scale(1.2);
-    color: #00e0ff;
-}
-
-p {
-    line-height: 1.6;
+@keyframes latido {
+    50% { transform: scale(1.2); }
 }

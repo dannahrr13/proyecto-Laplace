@@ -12,13 +12,9 @@
 
 <body>
 
-<!-- INICIO -->
 <div id="pantalla-inicio" class="pantalla inicio">
-
     <div class="contenedor-juego">
-
         <div class="cerrar">✖</div>
-
         <p class="mini">LAPLACE GAME</p>
 
         <h1 class="titulo">
@@ -46,12 +42,9 @@
                 <span class="btn amarillo"></span>
             </div>
         </div>
-
     </div>
-
 </div>
 
-<!-- INSTRUCCIONES -->
 <div id="pantalla-instrucciones" class="pantalla oculto">
     <div class="card">
         <h2>Instrucciones</h2>
@@ -65,7 +58,6 @@
     </div>
 </div>
 
-<!-- NIVELES -->
 <div id="pantalla-niveles" class="pantalla oculto">
     <div class="card">
         <h2>Selecciona nivel</h2>
@@ -75,10 +67,10 @@
     </div>
 </div>
 
-<!-- JUEGO -->
 <div id="pantalla-juego" class="pantalla oculto">
     <div class="card">
         <h2 id="ecuacion">x + 2 = 5</h2>
+
         <div id="opciones">
             <button>2</button>
             <button>3</button>
@@ -91,11 +83,14 @@
     </div>
 </div>
 
-<!-- FINAL -->
 <div id="pantalla-final" class="pantalla oculto">
     <div class="card">
         <h2>Juego terminado</h2>
         <p>Puntuación final: <span id="puntuacion-final"></span></p>
+
+        <h3>🏆 Record</h3>
+        <p id="record">0</p>
+
         <button id="btn-reiniciar">REINICIAR</button>
     </div>
 </div>
