@@ -6,7 +6,6 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/estilos.css">
-<link rel="stylesheet" href="css/animaciones.css">
 
 </head>
 
@@ -25,22 +24,10 @@
             Demuestra tus habilidades resolviendo ecuaciones ⚡
         </p>
 
-        <button id="btn-jugar" class="btn-start">START!</button>
-        <button id="btn-instrucciones" class="btn-start">INSTRUCCIONES</button>
+        <input id="nombre" placeholder="Tu nombre">
 
-        <div class="controles">
-            <div class="cruz">
-                <div class="vertical"></div>
-                <div class="horizontal"></div>
-            </div>
-
-            <div class="botones">
-                <span class="btn rojo"></span>
-                <span class="btn verde"></span>
-                <span class="btn azul"></span>
-                <span class="btn amarillo"></span>
-            </div>
-        </div>
+        <button id="btn-jugar">START</button>
+        <button id="btn-instrucciones">INSTRUCCIONES</button>
     </div>
 </div>
 
@@ -48,10 +35,9 @@
     <div class="card">
         <h2>Instrucciones</h2>
         <p>
-        Elige la respuesta correcta.<br>
-        Cada acierto suma puntos.<br>
-        Si fallas, pierdes una vida.<br>
-        Tienes tiempo limitado.
+        Elige la respuesta correcta<br>
+        Gana puntos y evita perder vidas<br>
+        Tienes tiempo limitado
         </p>
         <button id="btn-volver">VOLVER</button>
     </div>
@@ -59,36 +45,41 @@
 
 <div id="pantalla-niveles" class="pantalla oculto">
     <div class="card">
-        <h2>Selecciona nivel</h2>
-        <button id="btn-facil">FÁCIL</button>
+        <h2>Nivel</h2>
+        <button id="btn-facil">FACIL</button>
         <button id="btn-medio">MEDIO</button>
-        <button id="btn-dificil">DIFÍCIL</button>
+        <button id="btn-dificil">DIFICIL</button>
     </div>
 </div>
 
 <div id="pantalla-juego" class="pantalla oculto">
     <div class="card">
-        <h2 id="ecuacion">x + 2 = 5</h2>
 
-        <div id="opciones">
-            <button>2</button>
-            <button>3</button>
-            <button>4</button>
+        <div class="hud">
+            <span>Puntos: <span id="puntos">0</span></span>
+            <span>Tiempo: <span id="tiempo">60</span></span>
+            <span>Vidas: <span id="vidas">3</span></span>
         </div>
 
-        <p>Puntos: <span id="puntos">0</span></p>
-        <p>Tiempo: <span id="tiempo">60</span></p>
-        <p>Vidas: <span id="vidas">3</span></p>
+        <div class="barra">
+            <div id="barra-tiempo"></div>
+        </div>
+
+        <h2 id="ecuacion"></h2>
+
+        <div id="opciones"></div>
+
     </div>
 </div>
 
 <div id="pantalla-final" class="pantalla oculto">
     <div class="card">
-        <h2>Juego terminado</h2>
-        <p>Puntuación final: <span id="puntuacion-final"></span></p>
+        <h2 id="resultado">Juego terminado</h2>
 
-        <h3>🏆 Record</h3>
-        <p id="record">0</p>
+        <p>Puntuación: <span id="puntuacion-final"></span></p>
+
+        <h3>🏆 Ranking</h3>
+        <ul id="ranking"></ul>
 
         <button id="btn-reiniciar">REINICIAR</button>
     </div>

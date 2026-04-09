@@ -1,4 +1,3 @@
-// PANTALLAS
 const pantallas = {
     inicio: document.getElementById("pantalla-inicio"),
     instrucciones: document.getElementById("pantalla-instrucciones"),
@@ -7,7 +6,6 @@ const pantallas = {
     final: document.getElementById("pantalla-final")
 };
 
-// ELEMENTOS
 const ecuacion = document.getElementById("ecuacion");
 const opcionesDiv = document.getElementById("opciones");
 
@@ -16,65 +14,57 @@ const tiempoSpan = document.getElementById("tiempo");
 const vidasSpan = document.getElementById("vidas");
 const puntuacionFinal = document.getElementById("puntuacion-final");
 
-// VARIABLES
+let nombreJugador = "";
 let puntos = 0;
 let vidas = 3;
 let tiempo = 60;
-
 let intervalo;
-let intervaloAnimacion;
-
 let preguntas = [];
 let actual;
-let bloqueado = false;
+let tiempoMax = 60;
 
-// NIVELES
+/* NIVELES */
+
 const facil = [
-    { pregunta: "L{ t }", correcta: "1/s^2", opciones: ["1/s", "1/s^2", "2/s^3"] },
-    { pregunta: "L{ 1 }", correcta: "1/s", opciones: ["1/s", "s", "1/s^2"] },
-    { pregunta: "L{ t^2 }", correcta: "2/s^3", opciones: ["2/s^3", "1/s^2", "6/s^4"] },
-    { pregunta: "L{ 3 }", correcta: "3/s", opciones: ["3/s", "1/s", "3/s^2"] }
+    { pregunta: "L{ t }", correcta: "1/s^2", opciones: ["1/s","1/s^2","2/s^3"] },
+    { pregunta: "L{ 1 }", correcta: "1/s", opciones: ["1/s","s","1/s^2"] },
+    { pregunta: "L{ t^2 }", correcta: "2/s^3", opciones: ["2/s^3","1/s^2","6/s^4"] }
 ];
 
 const medio = [
-    { pregunta: "L{ t^2 }", correcta: "2/s^3", opciones: ["2/s^3", "6/s^4", "1/s^2"] },
-    { pregunta: "L{ sin(t) }", correcta: "1/(s^2+1)", opciones: ["1/(s^2+1)", "s/(s^2+1)", "1/s"] },
-    { pregunta: "L{ cos(t) }", correcta: "s/(s^2+1)", opciones: ["s/(s^2+1)", "1/(s^2+1)", "1/s"] },
-    { pregunta: "L{ 2sin(t) }", correcta: "2/(s^2+1)", opciones: ["2/(s^2+1)", "1/(s^2+1)", "2s/(s^2+1)"] }
+    { pregunta: "L{ t^2 }", correcta: "2/s^3", opciones: ["2/s^3","6/s^4","1/s^2","3/s^2"] },
+    { pregunta: "L{ sin(t) }", correcta: "1/(s^2+1)", opciones: ["1/(s^2+1)","s/(s^2+1)","1/s","2/(s^2+1)"] },
+    { pregunta: "L{ cos(t) }", correcta: "s/(s^2+1)", opciones: ["s/(s^2+1)","1/(s^2+1)","1/s","s/(s+1)"] }
 ];
 
 const dificil = [
-    { pregunta: "L{ e^t }", correcta: "1/(s-1)", opciones: ["1/(s-1)", "1/(s+1)", "s/(s^2+1)"] },
-    { pregunta: "L{ cos(t) }", correcta: "s/(s^2+1)", opciones: ["s/(s^2+1)", "1/(s^2+1)", "1/s"] },
-    { pregunta: "L{ e^{-t} }", correcta: "1/(s+1)", opciones: ["1/(s+1)", "1/(s-1)", "s/(s^2+1)"] },
-    { pregunta: "L{ e^{2t} }", correcta: "1/(s-2)", opciones: ["1/(s-2)", "1/(s+2)", "2/(s-2)"] }
+    { pregunta: "L{ e^t }", correcta: "1/(s-1)", opciones: ["1/(s-1)","1/(s+1)","s/(s^2+1)","1/(s-2)"] },
+    { pregunta: "L{ e^{-t} }", correcta: "1/(s+1)", opciones: ["1/(s+1)","1/(s-1)","s/(s^2+1)","1/(s+2)"] },
+    { pregunta: "L{ e^{2t} }", correcta: "1/(s-2)", opciones: ["1/(s-2)","1/(s+2)","2/(s-2)","s/(s^2+4)"] }
 ];
 
-// CAMBIAR PANTALLA
+/* PANTALLAS */
+
 function mostrarPantalla(p) {
     Object.values(pantallas).forEach(x => x.classList.add("oculto"));
     p.classList.remove("oculto");
 }
 
-// MEZCLAR OPCIONES
+/* MEZCLAR */
+
 function mezclar(array) {
     return array.sort(() => Math.random() - 0.5);
 }
-//record
-const recordSpan = document.getElementById("record");
-let record = parseInt(localStorage.getItem("record")) || 0;
-recordSpan.textContent = record;
 
+/* PREGUNTA */
 
-// NUEVA PREGUNTA
 function nuevaPregunta() {
 
+    actual = preguntas[Math.floor(Math.random() * preguntas.length)];
+
     ecuacion.style.opacity = "0";
-    ecuacion.style.transform = "scale(0.8)";
 
     setTimeout(() => {
-
-        actual = preguntas[Math.floor(Math.random() * preguntas.length)];
 
         ecuacion.textContent = actual.pregunta;
         opcionesDiv.innerHTML = "";
@@ -82,13 +72,11 @@ function nuevaPregunta() {
         const opcionesMezcladas = mezclar([...actual.opciones]);
 
         opcionesMezcladas.forEach(op => {
+
             const btn = document.createElement("button");
             btn.textContent = op;
 
             btn.onclick = () => {
-
-                if (bloqueado) return;
-                bloqueado = true;
 
                 const botones = opcionesDiv.querySelectorAll("button");
                 botones.forEach(b => b.disabled = true);
@@ -96,6 +84,16 @@ function nuevaPregunta() {
                 if (op === actual.correcta) {
                     btn.classList.add("correcto");
                     puntos++;
+
+                    for (let i = 0; i < 4; i++) {
+                        const p = document.createElement("div");
+                        p.className = "punto-flotante";
+                        p.style.left = Math.random()*100+"%";
+                        p.style.top = "50%";
+                        document.body.appendChild(p);
+                        setTimeout(()=>p.remove(),1000);
+                    }
+
                 } else {
                     btn.classList.add("incorrecto");
                     vidas--;
@@ -105,17 +103,17 @@ function nuevaPregunta() {
                             b.classList.add("correcto");
                         }
                     });
+
+                    document.body.style.background = "#ff0000";
+                    setTimeout(()=>document.body.style.background="",100);
                 }
 
                 puntosSpan.textContent = puntos;
                 vidasSpan.textContent = vidas;
 
                 setTimeout(() => {
-                    bloqueado = false;
-
                     if (vidas <= 0) terminarJuego();
                     else nuevaPregunta();
-
                 }, 800);
             };
 
@@ -123,86 +121,111 @@ function nuevaPregunta() {
         });
 
         ecuacion.style.opacity = "1";
-        ecuacion.style.transform = "scale(1)";
 
     }, 200);
 }
 
-// TIEMPO
+/* TIEMPO */
+
 function iniciarTiempo() {
 
+    const barra = document.getElementById("barra-tiempo");
+    barra.style.width = "100%";
+
     clearInterval(intervalo);
-    clearInterval(intervaloAnimacion);
 
     intervalo = setInterval(() => {
         tiempo--;
         tiempoSpan.textContent = tiempo;
 
+        barra.style.width = (tiempo / tiempoMax * 100) + "%";
+
         if (tiempo <= 0) terminarJuego();
+
     }, 1000);
-
-    // animación del contador
-    let ultimo = tiempo;
-
-    intervaloAnimacion = setInterval(() => {
-        if (tiempo !== ultimo) {
-            tiempoSpan.style.transform = "scale(1.3)";
-            setTimeout(() => {
-                tiempoSpan.style.transform = "scale(1)";
-            }, 150);
-            ultimo = tiempo;
-        }
-    }, 100);
 }
 
-// TERMINAR
+/* RANKING */
+
+function guardarRanking() {
+
+    let ranking = JSON.parse(localStorage.getItem("ranking")) || [];
+
+    ranking.push({ nombre: nombreJugador, puntos: puntos });
+
+    ranking.sort((a,b)=>b.puntos-a.puntos);
+    ranking = ranking.slice(0,5);
+
+    localStorage.setItem("ranking", JSON.stringify(ranking));
+
+    const lista = document.getElementById("ranking");
+    lista.innerHTML = "";
+
+    ranking.forEach(j => {
+        const li = document.createElement("li");
+        li.textContent = j.nombre + " - " + j.puntos;
+        lista.appendChild(li);
+    });
+}
+
+/* FINAL */
+
 function terminarJuego() {
+
     clearInterval(intervalo);
-    clearInterval(intervaloAnimacion);
 
     puntuacionFinal.textContent = puntos;
 
-    // ACTUALIZAR RECORD
-    if (puntos > record) {
-        record = puntos;
-        localStorage.setItem("record", record);
+    if (puntos >= 10) {
+        document.getElementById("resultado").textContent = "VICTORIA";
+    } else {
+        document.getElementById("resultado").textContent = "GAME OVER";
     }
 
-    recordSpan.textContent = record;
-
-    const card = document.querySelector("#pantalla-final .card");
-    if (card) {
-        card.style.animation = "pop 0.5s";
-    }
-
+    guardarRanking();
     mostrarPantalla(pantallas.final);
 }
 
+/* INICIAR */
 
-// INICIAR
 function iniciarJuego(nivel) {
 
-    clearInterval(intervalo);
-    clearInterval(intervaloAnimacion);
+    nombreJugador = document.getElementById("nombre").value || "Jugador";
 
     puntos = 0;
     vidas = 3;
-    tiempo = 60;
+
+    if (nivel === "facil") {
+        preguntas = facil;
+        tiempo = 60;
+        tiempoMax = 60;
+    }
+
+    if (nivel === "medio") {
+        preguntas = medio;
+        tiempo = 45;
+        tiempoMax = 45;
+        vidas = 2;
+    }
+
+    if (nivel === "dificil") {
+        preguntas = dificil;
+        tiempo = 30;
+        tiempoMax = 30;
+        vidas = 1;
+    }
 
     puntosSpan.textContent = puntos;
     vidasSpan.textContent = vidas;
     tiempoSpan.textContent = tiempo;
-
-    if (nivel === "facil") preguntas = facil;
-    if (nivel === "medio") preguntas = medio;
-    if (nivel === "dificil") preguntas = dificil;
 
     mostrarPantalla(pantallas.juego);
     nuevaPregunta();
     iniciarTiempo();
 }
 
-// EVENTOS
+/* BOTONES */
+
 document.getElementById("btn-jugar").onclick = () => mostrarPantalla(pantallas.niveles);
 document.getElementById("btn-instrucciones").onclick = () => mostrarPantalla(pantallas.instrucciones);
 document.getElementById("btn-volver").onclick = () => mostrarPantalla(pantallas.inicio);
