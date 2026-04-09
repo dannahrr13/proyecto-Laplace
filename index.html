@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <title>Laplace Game</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
 <link rel="stylesheet" href="css/estilos.css">
 
 </head>
@@ -14,19 +15,15 @@
 <div id="pantalla-inicio" class="pantalla inicio">
     <div class="contenedor-juego">
 
-        <h1 class="titulo">
-            <span class="rosa">LAPLACE</span>
-            <span class="azul">GAME</span>
-        </h1>
+        <h1 class="titulo">Laplace Game</h1>
 
-        <p class="descripcion">
-            Demuestra tus habilidades resolviendo ecuaciones ⚡
-        </p>
+        <p class="descripcion">Resuelve transformadas y demuestra tu nivel</p>
 
-        <input id="nombre" placeholder="Tu nombre">
+        <input id="nombre" placeholder="Ingresa tu nombre">
 
-        <button id="btn-jugar">START</button>
+        <button id="btn-jugar">JUGAR</button>
         <button id="btn-instrucciones">INSTRUCCIONES</button>
+
     </div>
 </div>
 
@@ -34,9 +31,10 @@
     <div class="card">
         <h2>Instrucciones</h2>
         <p>
-        Elige la respuesta correcta<br>
-        Gana puntos y evita perder vidas<br>
-        Tienes tiempo limitado
+        Responde correctamente<br>
+        Cada acierto suma puntos<br>
+        Si fallas pierdes vida<br>
+        Gana antes de que acabe el tiempo
         </p>
         <button id="btn-volver">VOLVER</button>
     </div>
@@ -44,10 +42,10 @@
 
 <div id="pantalla-niveles" class="pantalla oculto">
     <div class="card">
-        <h2>Nivel</h2>
-        <button id="btn-facil">FACIL</button>
+        <h2>Selecciona nivel</h2>
+        <button id="btn-facil">FÁCIL</button>
         <button id="btn-medio">MEDIO</button>
-        <button id="btn-dificil">DIFICIL</button>
+        <button id="btn-dificil">DIFÍCIL</button>
     </div>
 </div>
 
@@ -73,14 +71,17 @@
 
 <div id="pantalla-final" class="pantalla oculto">
     <div class="card">
-        <h2 id="resultado">Juego terminado</h2>
+
+        <h2 id="resultado"></h2>
 
         <p>Puntuación: <span id="puntuacion-final"></span></p>
 
         <h3>🏆 Ranking</h3>
         <ul id="ranking"></ul>
 
+        <button id="btn-limpiar">BORRAR RANKING</button>
         <button id="btn-reiniciar">REINICIAR</button>
+
     </div>
 </div>
 
