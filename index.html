@@ -5,8 +5,8 @@
 <title>Laplace Game</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-
 <link rel="stylesheet" href="css/estilos.css">
+<link rel="stylesheet" href="css/animaciones.css">
 
 </head>
 
@@ -43,9 +43,9 @@
 <div id="pantalla-niveles" class="pantalla oculto">
     <div class="card">
         <h2>Selecciona nivel</h2>
-        <button id="btn-facil">FÁCIL</button>
-        <button id="btn-medio">MEDIO</button>
-        <button id="btn-dificil">DIFÍCIL</button>
+        <button id="btn-facil">FÁCIL ⭐</button>
+<button id="btn-medio">MEDIO ⭐⭐</button>
+<button id="btn-dificil">DIFÍCIL ⭐⭐⭐</button>
     </div>
 </div>
 
@@ -76,6 +76,8 @@
 
         <p>Puntuación: <span id="puntuacion-final"></span></p>
 
+        <div class="estrellas" id="estrellas-final">⭐⭐⭐☆☆</div>
+
         <h3>🏆 Ranking</h3>
         <ul id="ranking"></ul>
 
@@ -85,7 +87,12 @@
     </div>
 </div>
 
+<audio id="sonido-correcto" src="sonidos/correcto.mp3"></audio>
+<audio id="sonido-error" src="sonidos/incorrecto.mp3"></audio>
+<audio id="sonido-win" src="sonidos/ganador.mp3"></audio>
+
 <script src="js/juego.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </body>
 </html>

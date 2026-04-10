@@ -1,35 +1,20 @@
-/* FONDO */
-.inicio {
-    background: linear-gradient(270deg, #6a00ff, #a100ff, #00c3ff);
-    background-size: 600% 600%;
-    animation: fondo 10s ease infinite;
-}
-
-@keyframes fondo {
-    0% {background-position: 0%}
-    50% {background-position: 100%}
-    100% {background-position: 0%}
-}
-
-/* FLOTAR */
 .contenedor-juego {
     animation: flotar 3s ease-in-out infinite;
 }
 
 @keyframes flotar {
-    0%,100% {transform: translateY(0);}
-    50% {transform: translateY(-10px);}
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
 }
 
-/* TITULO */
 .titulo {
     animation: glitch 1.5s infinite;
 }
 
 @keyframes glitch {
-    0% {transform: translate(0);}
-    25% {transform: translate(2px, -2px);}
-    50% {transform: translate(-2px, 2px);}
-    75% {transform: translate(2px, 2px);}
-    100% {transform: translate(0);}
+    0% { transform: translate(0); }
+    25% { transform: translate(1px, -1px); }
+    50% { transform: translate(-1px, 1px); }
+    75% { transform: translate(1px, 1px); }
+    100% { transform: translate(0); }
 }
