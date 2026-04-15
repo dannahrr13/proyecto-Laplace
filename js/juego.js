@@ -257,22 +257,22 @@ function iniciarJuego(nivel) {
 
     if (nivel === "facil") {
         preguntas = facil;
-        tiempo = 60;
-        tiempoMax = 60;
+        tiempo = 80;
+        tiempoMax = 80;
         vidas = 3;
     }
 
     if (nivel === "medio") {
         preguntas = medio;
-        tiempo = 45;
-        tiempoMax = 45;
+        tiempo = 55;
+        tiempoMax = 55;
         vidas = 2;
     }
 
     if (nivel === "dificil") {
         preguntas = dificil;
-        tiempo = 30;
-        tiempoMax = 30;
+        tiempo = 60;
+        tiempoMax = 60;
         vidas = 2;
     }
 
