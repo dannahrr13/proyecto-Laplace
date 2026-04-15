@@ -174,7 +174,7 @@ function nuevaPregunta() {
                     if (nivelActual === "dificil") {
                         vidas++;
                         tiempo += 5;
-                        mostrarAviso("🎁 Difícil: +1 vida y +5s");
+                        mostrarAviso("🎁 Difícil: +1 vida y +5 segundos");
                     }
                 }
 
